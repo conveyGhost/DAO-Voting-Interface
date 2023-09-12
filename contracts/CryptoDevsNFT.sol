@@ -8,6 +8,7 @@ contract CryptoDevsNFT is ERC721Enumerable {
     constructor() ERC721("CryptoDevs", "CD") {}
 
     // Have a public mint function anyone can call to get an NFT
+    // we call _safemint from the openzeppelin contract
     function mint() public {
         _safeMint(msg.sender, totalSupply());
     }
