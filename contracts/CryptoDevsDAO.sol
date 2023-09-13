@@ -56,7 +56,6 @@ contract CryptoDevsDAO is Ownable {
         // voters - a mapping of CryptoDevsNFT tokenIDs to booleans indicating whether that NFT has already been used to cast a vote or not
         mapping(uint256 => bool) voters;
     }
-    
     // Create a mapping of ID to Proposal
     mapping(uint256 => Proposal) public proposals;
     // Number of proposals that have been created
@@ -72,14 +71,12 @@ contract CryptoDevsDAO is Ownable {
         nftMarketplace = IFakeNFTMarketplace(_nftMarketplace);
         cryptoDevsNFT = ICryptoDevsNFT(_cryptoDevsNFT);
     }
-
     // Create a modifier which only allows a function to be
     // called by someone who owns at least 1 CryptoDevsNFT
     modifier nftHolderOnly() {
         require(cryptoDevsNFT.balanceOf(msg.sender) > 0, "NOT_A_DAO_MEMBER");
         _;
     }
-
     /// @dev createProposal allows a CryptoDevsNFT holder to create a new proposal in the DAO
     /// @param _nftTokenId - the tokenID of the NFT to be purchased from FakeNFTMarketplace if this proposal passes
     /// @return Returns the proposal index for the newly created proposal
@@ -98,6 +95,49 @@ contract CryptoDevsDAO is Ownable {
 
         return numProposals - 1;
     }
+    // Create a modifier which only allows a function to be
+    // called if the given proposal's deadline has not been exceeded yet
+    modifier activeProposalOnly(uint256 proposalIndex) {
+        require(
+            proposals[proposalIndex].deadline > block.timestamp,
+            "DEADLINE_EXCEEDED"
+        );
+        _;
+    }
+    // Create an enum named Vote containing possible options for a vote
+    enum Vote {
+        YAY, // YAY = 0
+        NAY // NAY = 1
+    }
+    /// @dev voteOnProposal allows a CryptoDevsNFT holder to cast their vote on an active proposal
+    /// @param proposalIndex - the index of the proposal to vote on in the proposals array
+    /// @param vote - the type of vote they want to cast
+    function voteOnProposal(uint256 proposalIndex, Vote vote)
+        external
+        nftHolderOnly
+        activeProposalOnly(proposalIndex)
+    {
+        Proposal storage proposal = proposals[proposalIndex];
 
+        uint256 voterNFTBalance = cryptoDevsNFT.balanceOf(msg.sender);
+        uint256 numVotes = 0;
+
+        // Calculate how many NFTs are owned by the voter
+        // that haven't already been used for voting on this proposal
+        for (uint256 i = 0; i < voterNFTBalance; i++) {
+            uint256 tokenId = cryptoDevsNFT.tokenOfOwnerByIndex(msg.sender, i);
+            if (proposal.voters[tokenId] == false) {
+                numVotes++;
+                proposal.voters[tokenId] = true;
+            }
+        }
+        require(numVotes > 0, "ALREADY_VOTED");
+
+        if (vote == Vote.YAY) {
+            proposal.yayVotes += numVotes;
+        } else {
+            proposal.nayVotes += numVotes;
+        }
+    }
     
 }
