@@ -1,33 +1,65 @@
-## Overview
+# CryptoDevs DAO
 
-The **CryptoDevsDAO** smart contract is a decentralized autonomous organization (DAO) built on the Ethereum blockchain. It facilitates collective decision-making and resource allocation among CryptoDevsNFT holders. This contract empowers the community of CryptoDevsNFT owners to create and vote on proposals for purchasing NFTs from a FakeNFTMarketplace.
+CryptoDevs DAO is a decentralized application that allows members to propose and vote on purchasing fake NFTs. Built with Next.js and integrated with Ethereum smart contracts, this project offers a simplified interface for DAO (Decentralized Autonomous Organization) operations.
 
-## Use and Application
+## Features
 
-### Overview
+- Connect your Ethereum wallet.
+- Create a proposal to purchase a fake NFT.
+- Vote YAY or NAY on existing proposals.
+- View a list of all proposals with their details.
+- Execute a proposal after the deadline.
+- (Admin only) Withdraw Ether from the DAO contract.
 
-CryptoDevsDAO is designed to create a transparent and community-driven environment for CryptoDevsNFT holders, allowing them to collectively decide on acquiring NFT assets. The primary functions of the contract include:
+## Getting Started
 
-1. **Proposal Creation**: Any CryptoDevsNFT holder can create a proposal to purchase an NFT from the FakeNFTMarketplace by specifying the NFT's token ID.
+### Prerequisites
 
-2. **Voting**: CryptoDevsNFT holders can cast their votes ("YAY" or "NAY") on proposals they support or oppose. The number of votes a user can cast depends on the number of CryptoDevsNFTs they own.
+- Node.js and npm installed.
+- MetaMask or similar Ethereum wallet.
 
-3. **Execution**: Once a proposal receives enough "YAY" votes and its voting deadline has passed, any CryptoDevsNFT holder can execute the proposal, leading to the purchase of the specified NFT.
+### Installation
 
-4. **Withdrawal**: The contract owner (deployer) can withdraw any accumulated Ether (ETH) from the contract.
+1. Clone the repository:
 
-### Use Cases and Applications
+   ```bash
+   git clone [repository_url]
+   cd [repository_directory]
+   ```
 
-CryptoDevsDAO can be applied in various scenarios, including:
+2. Install the required npm packages:
 
-1. **Collective Decision-Making**: CryptoDevsNFT holders can collectively decide which NFTs to acquire, enabling a decentralized approach to asset acquisition.
+   ```bash
+   npm install
+   ```
 
-2. **Community Governance**: The contract can be used to govern the allocation of resources or funds within a CryptoDevsNFT community.
+### Configuration
 
-3. **DAO Experimentation**: Developers and communities can experiment with DAO functionality, learning how to create, vote on, and execute proposals in a controlled environment.
+1. Add your Ethereum contract ABI and addresses in the `constants` directory.
 
-4. **Asset Pooling**: CryptoDevsNFT holders can pool their assets to purchase high-value NFTs collectively, reducing the individual financial burden.
+2. Configure the frontend environment variables (if any) as per your setup.
 
-5. **Token Utility**: The CryptoDevsNFTs themselves can gain utility by being used to vote and participate in the DAO, enhancing their value within the ecosystem.
+### Running the App
 
-CryptoDevsDAO empowers CryptoDevsNFT communities to make collective decisions regarding NFT acquisitions, fostering collaboration, transparency, and community engagement. It represents a practical use case of decentralized governance and decision-making within the NFT space.
+1. Start the Next.js server:
+
+   ```bash
+   npm run dev
+   ```
+
+2. Open a browser and navigate to `http://localhost:3000/` to access the DAO interface.
+
+## Usage
+
+1. Connect your Ethereum wallet using the "Connect Wallet" button.
+2. Once connected, you can create a proposal or view existing proposals.
+3. Proposals can be voted on until their deadline.
+4. After the voting deadline, if the proposal hasn't been executed, it can be executed based on the majority of the votes.
+5. Admins have the additional capability to withdraw Ether from the DAO contract.
+
+## Built With
+
+- [Next.js](https://nextjs.org/)
+- Ethereum Smart Contracts
+- [RainbowKit](https://rainbow.me/)
+- [Wagmi](#) (Ensure to provide appropriate links or references for the used tools and libraries.)
